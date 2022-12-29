@@ -7,7 +7,7 @@ const siteMetadata = {
   theme: 'dark', // system, dark or light
   siteUrl: 'https://lahrasab.me',
   siteRepo: 'https://github.com/thespecialone1/nextjs-portfolio',
-  siteLogo: '/static/images/logo.png',
+  siteLogo: '/static/images/logo2.png',
   image: '/static/images/avatar1.jpg',
   socialBanner: '/static/images/twitter-card.png',
   email: 'lahrasab.ramzan36@gmail.com',
