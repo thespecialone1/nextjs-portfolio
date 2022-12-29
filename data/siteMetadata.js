@@ -1,5 +1,5 @@
 const siteMetadata = {
-  title: 'Portfolio',
+  title: 'Lahrasabs Portfolio',
   author: 'Lahrasab Ramzan',
   headerTitle: 'NetworkingChronical',
   description: 'A blog where we discuss about latest technologies in Neteorking and DevOps ',
@@ -8,7 +8,7 @@ const siteMetadata = {
   siteUrl: 'https://lahrasab.me',
   siteRepo: 'https://github.com/thespecialone1/nextjs-portfolio',
   siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
+  image: '/static/images/avatar1.jpg',
   socialBanner: '/static/images/twitter-card.png',
   email: 'lahrasab.ramzan36@gmail.com',
   github: 'https://github.com/thespecialone1',

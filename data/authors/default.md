@@ -1,6 +1,6 @@
 ---
 name: Lahrasab Ramzan
-avatar: /static/images/avatar.png
+avatar: /static/images/avatar1.jpg
 occupation: Network Engineer
 company: University of Engineering and Technology, Lahore
 email: lahrasab.ramzan36@gmail.con
