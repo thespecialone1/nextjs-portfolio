@@ -1,21 +1,21 @@
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Portfolio',
+  author: 'Lahrasab Ramzan',
+  headerTitle: 'NetworkingChronical',
+  description: 'A blog where we discuss about latest technologies in Neteorking and DevOps ',
   language: 'en-us',
-  theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  theme: 'dark', // system, dark or light
+  siteUrl: 'https://lahrasab.me',
+  siteRepo: 'https://github.com/thespecialone1/nextjs-portfolio',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
+  email: 'lahrasab.ramzan36@gmail.com',
+  github: 'https://github.com/thespecialone1',
+  twitter: 'https://twitter.com/lahrasab931',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
+  linkedin: 'https://www.linkedin.com/in/lahrasab',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the

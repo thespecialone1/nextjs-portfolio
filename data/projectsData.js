@@ -1,11 +1,9 @@
 const projectsData = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Visa Website',
+    description: `Made this huge website for a client for visa processing procedures. Its a static site but it has a lot of pages and it was really difficult to route every page effectively.`,
+    imgSrc: '/static/images/visa.png',
+    href: 'https://www.upwork.com/freelancers/~019954549d1897758d?p=1605209065760575488',
   },
   {
     title: 'The Time Machine',
