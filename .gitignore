@@ -36,10 +36,10 @@ yarn-error.log*
 .env.production.local
 
 #blogs
-deriving-ols-estimator.mdx
-github-markdown-guide.mdx
-guide-to-using-images-in-nextjs.mdx
-introducing-tailwind-nextjs-starter-blog.mdx
-new-features-in-v1.mdx
-pictures-of-canada.mdx
-the-time-machine.mdx
+/blog/deriving-ols-estimator.mdx
+/blog/github-markdown-guide.mdx
+/blog/guide-to-using-images-in-nextjs.mdx
+/blog/introducing-tailwind-nextjs-starter-blog.mdx
+/blog/new-features-in-v1.mdx
+/blog/pictures-of-canada.mdx
+/blog/the-time-machine.mdx
