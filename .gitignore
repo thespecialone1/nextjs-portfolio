@@ -34,12 +34,3 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-
-#blogs
-/blog/deriving-ols-estimator.mdx
-/blog/github-markdown-guide.mdx
-/blog/guide-to-using-images-in-nextjs.mdx
-/blog/introducing-tailwind-nextjs-starter-blog.mdx
-/blog/new-features-in-v1.mdx
-/blog/pictures-of-canada.mdx
-/blog/the-time-machine.mdx
