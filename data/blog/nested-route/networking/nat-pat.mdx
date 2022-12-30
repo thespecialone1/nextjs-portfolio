@@ -10,7 +10,7 @@ summary: 'Get the lowdown on NAT and PAT and how they can help you connect to th
 
 `Network Address Translation (NAT)` is a networking technique that allows multiple devices on a local network to share a single public IP address. This is accomplished by translating the private IP addresses of devices on the local network into a single, public IP address that is used to communicate with the internet. NAT can help `conserve IP addresses`, `improve security`, and enable connectivity for devices on a local network.
 
-# NAT
+# PAT
 
 `Port Address Translation (PAT)` is a technique used in network address translation (NAT) that enables a single network device, such as a router, to translate the `IP address and port number` of packets passing through it. This allows multiple devices on a local network to share a `single public IP address and access the internet`. PAT is commonly used to conserve IP addresses and improve network security by hiding the internal network structure from external devices.
 
@@ -35,6 +35,6 @@ summary: 'Get the lowdown on NAT and PAT and how they can help you connect to th
 
 `ip nat inside source list 1 interface Ethernet1 overload`
 
-```
+
 ![pat-explanation](/static/images/pat_explanation.jpg)
-```
+
