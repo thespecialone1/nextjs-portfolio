@@ -1,0 +1,40 @@
+---
+title: nat / pat the unsung heroes of networking
+date: '2022-12-30'
+tags: ['networking', 'router', 'cisco']
+draft: false
+summary: 'Get the lowdown on NAT and PAT and how they can help you connect to the internet.'
+---
+
+# NAT
+
+`Network Address Translation (NAT)` is a networking technique that allows multiple devices on a local network to share a single public IP address. This is accomplished by translating the private IP addresses of devices on the local network into a single, public IP address that is used to communicate with the internet. NAT can help `conserve IP addresses`, `improve security`, and enable connectivity for devices on a local network.
+
+# NAT
+
+`Port Address Translation (PAT)` is a technique used in network address translation (NAT) that enables a single network device, such as a router, to translate the `IP address and port number` of packets passing through it. This allows multiple devices on a local network to share a `single public IP address and access the internet`. PAT is commonly used to conserve IP addresses and improve network security by hiding the internal network structure from external devices.
+
+# NAT commands on a cisco router
+
+```
+1. ip nat inside source list interface overload
+2. ip nat inside source static
+3. ip nat inside
+4. ip nat outside
+5. ip nat enable
+```
+
+# Explanation of the above commands respectively
+
+- First command specifies the inside interfaces and the source IP addresses that will be translated, as well as the interface and IP address that will be used for the translations.
+- Second command specifies a static NAT mapping, which translates a specific local IP address to a specific global IP address.
+- In third and fourth command uses the ip nat inside and ip nat outside commands to identify the inside and outside interfaces on the router.
+- Fifth command uses the ip nat enable command to enable NAT on the router.
+
+> To verify type this in enable prompt:
+
+`ip nat inside source list 1 interface Ethernet1 overload`
+
+```
+![pat-explanation](/static/images/bimages/nat-pat pat-explanation.jpg "PAT uses unique source port numbers on the inside global (public) IP address to distinguish between translations.")
+```
