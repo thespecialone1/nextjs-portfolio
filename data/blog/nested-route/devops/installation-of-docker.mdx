@@ -1,0 +1,73 @@
+---
+title: Simple Installation of Docker and Docker Compose on latest Ubuntu 2023
+date: '2023-2-08'
+tags: ['devops', 'docker', 'docker-compose', 'tutorial', 'installation']
+draft: false
+summary: 'Simple and easy instructions to install docker and docker-compose on ubuntu 2023'
+---
+
+# Docker Installation
+
+## Update the repository
+
+```shell
+sudo apt update
+```
+
+## Install some dependencies
+
+```shell
+sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+```
+
+## Add gpg key
+
+```shell
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+## Add the repository
+
+```shell
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+```
+
+## Again update the repositorytory
+
+```shell
+sudo apt update
+```
+
+## Now this command will install the docker
+
+```shell
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+---
+
+# Docker-Compose
+
+Simply run this command it will install the latest version of docker-compose as of January 2023. You can replace the version by checking on their [release page](https://github.com/docker/compose/releases) and replace the current version with the one included in the command.
+
+```shell
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+## Make it executable
+
+```shell
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+## Verify the installation
+
+```shell
+# for docker run
+docker --version
+
+# for docker-compose run
+docker-compose --version
+```
+
+Hope You liked this simple tutorial.
