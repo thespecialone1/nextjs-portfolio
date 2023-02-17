@@ -1,0 +1,453 @@
+---
+title: Build a WhatsApp Bot to Send News Using Node.js and WhatsApp Web API
+date: '2023-2-18'
+tags: ['Node.js', 'WhatsApp', 'WhatsApp Web API', 'chatbot', 'news', 'automation', 'API']
+draft: false
+summary: 'Build a WhatsApp Bot to Send News Using Node.js and WhatsApp Web API" teaches how to use Node.js and the WhatsApp Web API to build a WhatsApp bot that can send the latest news articles to users. The bot retrieves news articles from a web server and sends them to users who request them via WhatsApp messages. The article explains the code and concepts behind building the bot in a step-by-step manner, making it easy for beginners to follow along.'
+---
+
+Have you ever wanted to create a WhatsApp bot that could send you news updates? In this tutorial, we will walk you through building a WhatsApp bot that fetches news from a website and sends it to a user when they send a specific message.
+
+## Prerequisites
+
+```
+1. A working knowledge of Node.js
+2. An active WhatsApp account
+3. An instance on Azure
+4. A news website to scrape
+5. WhatsApp Web API library
+6. Axios library
+7. Cheerio library
+```
+
+# Step 1 : Scraping news data
+
+We will use Axios and Cheerio libraries to scrape news data from a website. The website we will scrape is arynews.tv. We will use the following code to scrape the website and retrieve the title, thumbnail, source link, and description of each news article and then store this information in an array and that will be our API.
+
+### Import Required Modules
+
+- Import required modules for the code to work. express to create an instance of the app, `axios` to make HTTP requests, and cheerio to scrape and manipulate HTML data.
+
+```JS
+// Import required modules
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+```
+
+### Create an Instance of Express App
+
+- Create an instance of the Express app and set the port for the app to listen on.
+
+```JS
+// Create an instance of express app
+const app = express();
+const port = 8000;
+```
+
+### Set URL to Scrape
+
+- Set the URL to scrape data from.
+
+```JS
+// Set URL to scrape
+const url = 'https://arynews.tv/category/pakistan/';
+```
+
+### Create a GET Route
+
+- Create a GET route that responds with JSON data of the scraped article information.
+
+```JS
+// Create a GET route
+app.get('/', async (req, res) => {
+  try {
+```
+
+### Make a Request to the URL and Load HTML Data into Cheerio Object
+
+- Use `axios` to make a GET request to the URL and get the HTML data.
+- Load the HTML data into a Cheerio object using `cheerio`.
+
+```JS
+// Make a request to the URL and get the HTML data using axios
+    const response = await axios.get(url);
+
+// Load the HTML data into a cheerio object to manipulate it using jQuery syntax
+    const $ = cheerio.load(response.data);
+```
+
+### Create an Array to Hold the Scraped Article Data
+
+- Create an empty array to hold the scraped article data.
+
+```JS
+// Create an array to hold the scraped article data
+    const articles = [];
+```
+
+### Iterate Over Each Article Container on the Page
+
+- Use `$('.td-module-container').each()` to iterate over each article container on the page.
+- Use jQuery syntax to scrape the article title, thumbnail, and source URL from each article container
+- Create an article object with the scraped data and add it to the `articles` array.
+
+```JS
+// Iterate over each article container on the page
+    $('.td-module-container').each((index, element) => {
+
+// Scrape the article title, thumbnail, and source URL from each article container
+      const title = $(element).find('.td-module-meta-info h3').text().trim();
+      const thumbnail = $(element).find('.entry-thumb').attr('data-img-url');
+      const source = $(element).find('.td-module-meta-info h3 a').attr('href');
+
+// Create an article object and add it to the array
+      const article = { title, thumbnail, source, description: '' };
+      articles.push(article);
+    });
+```
+
+### Visit Each Article Source to Get the Description
+
+- Iterate over each
+
+```JS
+// Visit each article source to get the description
+    for (const article of articles) {
+      const sourceResponse = await axios.get(article.source);
+      const $source = cheerio.load(sourceResponse.data);
+      const description = $source('.tdb-block-inner p strong').text().trim();
+      article.description = description;
+    }
+```
+
+### JSON response and error handling
+
+- Data will be displayed in JSON form and error handling if anything goes wrong with the server. As we know code 500 indicates there's something wrong with server so we can identify the problem easily.
+
+```JS
+// Send articles as a JSON response
+    res.json(articles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Something went wrong');
+  }
+});
+```
+
+### API Starts Listening!!! YAAAYYYYYYY
+
+- Congrats you have made your own API. You can even sell it on platforms like [RAPID API](https://rapidapi.com)
+
+```JS
+// Start the express app and listen for requests on the specified port
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
+```
+
+# Step 2 : Building WhatsApp Bot
+
+### What the Bot will do
+
+WhatsApp Web API and Node.js to build a WhatsApp chatbot that can send news articles to the user. When a user sends the keyword "news" to the bot, it makes an HTTP request to a server that returns a list of news articles. The bot then sends the first three articles to the user, with an option to request more. The code listens for other keywords like "more" and "help" to provide additional functionality.
+
+Now we will code it. So lets get started:
+
+### Importing Libraries that will make API calls
+
+- In this block, we are importing the `axios` library to make API calls and `whatsapp-web.js` library to create a client object. Then we create a new client object with the `LocalAuth` authentication strategy.
+
+```csharp
+const axios = require('axios');
+const { Client, LocalAuth} = require('whatsapp-web.js');
+
+const client = new Client({
+    authStrategy: new LocalAuth()
+});
+
+```
+
+### Setting up event listeners and QR code
+
+- In this block, we are setting up event listeners for when the QR code needs to be scanned and when the client is ready. We also initialize the client object.
+
+```JS
+client.on('qr', (qr) => {
+    qrcode.generate(qr, {small: true});
+});
+
+client.on('ready', () => {
+    console.log('Client is ready!');
+});
+
+client.initialize();
+
+```
+
+### Help Message
+
+- In this block, we are defining a string variable that contains help message that will be sent as a reply when the user types "help" in WhatsApp.
+
+```JS
+const helpMessage = `Type 'news' to get the latest articles. Type 'more' to get more articles.`;
+```
+
+### This code listens for incoming messages
+
+- The code listens for incoming messages using the `client.on('message', async (message) => { ... })` function.
+
+```JS
+// This code runs when the bot receives a message
+client.on('message', async (message) => {
+            ...
+            write code here
+            ...
+})
+```
+
+### Converts the commands case-insensitive
+
+- This code will convert the message to lowercase to make it case-insensitive.
+
+```JS
+const lowerCase = message.body.toLowerCase();
+```
+
+### `NEWS` command
+
+- If the message is `news`, the code makes an HTTP request to a server that returns a list of news articles.
+
+```JS
+// If the message says 'news', get the latest news and send the top 3 articles
+
+    if (lowerCase === 'news') {
+        try {
+            // Get the latest news from the server
+            const response = await axios.get('http://localhost:8000/');
+            const articles = response.data;
+
+            // Limit the number of articles to a maximum of 3
+            const articleCount = Math.min(3, articles.length);
+            let index = 0;
+
+            // Send each article to the user
+            for (let i = 0; i < articleCount; i++) {
+                const article = articles[index];
+                await message.reply(`*${article.title}*\n\n${article.description}\n\nSource: ${article.source}`);
+                index++;
+            }
+```
+
+### `MORE` command
+
+- If the message is "more", the code retrieves the next three articles from the list and sends them to the user, with another prompt to request more if there are more articles available.
+
+```JS
+// If there are more articles, prompt the user to type 'more' to see them
+            if (articleCount < articles.length) {
+                await message.reply(`Type 'more' to get more articles.`);
+            }
+
+        } catch (error) {
+            // If there is an error getting the news, notify the user
+            console.error(error);
+            await message.reply('Sorry, an error occurred while fetching the latest news.');
+        }
+    }
+    // If the message says 'more', get the next 3 articles (if available)
+    else if (lowerCase === 'more') {
+        try {
+            // Get the latest news from the server
+            const response = await axios.get('http://20.203.148.130:8000/');
+            const articles = response.data;
+
+            // Get the next 3 articles (starting from index 3)
+            const articleCount = Math.min(3, articles.length - 3);
+            let index = 3;
+
+            // Send each article to the user
+            if (articleCount === 0) {
+                await message.reply(`There are no more articles available.`);
+            } else {
+                for (let i = 0; i < articleCount; i++) {
+                    const article = articles[index];
+                    await message.reply(`*${article.title}*\n\n${article.description}\n\nSource: ${article.source}`);
+                    index++;
+                }
+
+                // If there are more articles, prompt the user to type 'more' to see them
+                if (articleCount < articles.length - 3) {
+                    await message.reply(`Type 'more' to get more articles.`);
+                }
+            }
+
+        } catch (error) {
+            // If there is an error getting the news, notify the user
+            console.error(error);
+            await message.reply('Sorry, an error occurred while fetching the latest news.');
+        }
+    }
+```
+
+### `help` command
+
+- If the message is "help", the bot sends a help message to the user.
+- If the message is anything else, the bot sends a default message asking how it can help.
+
+```JS
+/ If the message says 'help', send the help message
+    else if (lowerCase === 'help') {
+        await message.reply(helpMessage);
+    }
+    // If the message doesn't match any of the above commands, send a generic message with the available commands
+    else {
+        await message.reply('Hi! How may I help you? Type *help* to see the available commands.');
+    }
+});
+```
+
+This code is for a WhatsApp bot that sends news articles to users who message it. Here's what the code does:
+
+When the bot receives a message, the `client.on('message', ...)` function is called. This function takes a callback function with the message object as
+
+## Complete Code
+
+### FOR API
+
+```JS
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+const app = express();
+const port = 8000;
+
+const url = 'https://arynews.tv/category/pakistan/';
+
+app.get('/', async (req, res) => {
+  try {
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const articles = [];
+
+    $('.td-module-container').each((index, element) => {
+      const title = $(element).find('.td-module-meta-info h3').text().trim();
+      const thumbnail = $(element).find('.entry-thumb').attr('data-img-url');
+      const source = $(element).find('.td-module-meta-info h3 a').attr('href');
+      const article = { title, thumbnail, source, description: '' };
+      articles.push(article);
+    });
+
+    // Visit each article source to get the description
+    for (const article of articles) {
+      const sourceResponse = await axios.get(article.source);
+      const $source = cheerio.load(sourceResponse.data);
+      const description = $source('.tdb-block-inner p strong').text().trim();
+      article.description = description;
+    }
+
+    // Send articles as a JSON response
+    res.json(articles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Something went wrong');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
+```
+
+### FOR WhatsApp BOT
+
+```JS
+const axios = require('axios');
+const { Client, LocalAuth} = require('whatsapp-web.js');
+
+const client = new Client({
+    authStrategy: new LocalAuth()
+});
+
+client.on('qr', (qr) => {
+    qrcode.generate(qr, {small: true});
+});
+
+client.on('ready', () => {
+    console.log('Client is ready!');
+});
+
+client.initialize();
+
+const helpMessage = `Type 'news' to get the latest articles. Type 'more' to get more articles.`;
+
+client.on('message', async (message) => {
+    const lowerCase = message.body.toLowerCase();
+
+    if (lowerCase === 'news') {
+        try {
+            const response = await axios.get('http://20.203.148.130:8000/');
+            const articles = response.data;
+
+            const articleCount = Math.min(3, articles.length); // limit to maximum of 3 articles
+            let index = 0;
+
+            for (let i = 0; i < articleCount; i++) {
+                const article = articles[index];
+                await message.reply(`*${article.title}*\n\n${article.description}\n\nSource: ${article.source}`);
+                index++;
+            }
+
+            if (articleCount < articles.length) {
+                await message.reply(`Type 'more' to get more articles.`);
+            }
+
+        }
+        catch (error) {
+            console.error(error);
+            await message.reply('Sorry, an error occurred while fetching the latest news.');
+        }
+    } else if (lowerCase === 'more') {
+        try {
+            const response = await axios.get('http://20.203.148.130:8000/');
+            const articles = response.data;
+
+            const articleCount = Math.min(3, articles.length - 3); // get next 3 articles
+            let index = 3;
+
+            if (articleCount === 0) {
+                await message.reply(`There are no more articles available.`);
+            } else {
+                for (let i = 0; i < articleCount; i++) {
+                    const article = articles[index];
+                    await message.reply(`*${article.title}*\n\n${article.description}\n\nSource: ${article.source}`);
+                    index++;
+                }
+
+                if (articleCount < articles.length - 3) {
+                    await message.reply(`Type 'more' to get more articles.`);
+                }
+            }
+
+        } catch (error) {
+            console.error(error);
+            await message.reply('Sorry, an error occurred while fetching the latest news.');
+        }
+    } else if (lowerCase === 'help') {
+        await message.reply(helpMessage);
+    } else {
+        await message.reply('Hi! How may I help you? Type *help* to see the available commands.');
+    }
+});
+```
+
+## Conclusion
+
+In conclusion, we have successfully built a WhatsApp bot to send news using Node.js and the WhatsApp Web API. This bot allows users to get the latest news by simply sending a message to the bot on WhatsApp. We used Axios to make HTTP requests to a remote API that returns news articles in JSON format. We then parsed the response and sent the articles to the user via WhatsApp. The bot also allows users to get more articles by sending the "more" command. With this bot, users can get the latest news without having to leave WhatsApp, making it a convenient and user-friendly solution.
+
+<sub>
+  In the wise words of Bugs Bunny, "Don't panic, just automate!" So go forth and automate with your
+  new WhatsApp news bot!
+</sub>
