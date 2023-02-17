@@ -259,7 +259,7 @@ const lowerCase = message.body.toLowerCase();
     else if (lowerCase === 'more') {
         try {
             // Get the latest news from the server
-            const response = await axios.get('http://20.203.148.130:8000/');
+            const response = await axios.get('http://localhost:8000/');
             const articles = response.data;
 
             // Get the next 3 articles (starting from index 3)
@@ -388,7 +388,7 @@ client.on('message', async (message) => {
 
     if (lowerCase === 'news') {
         try {
-            const response = await axios.get('http://20.203.148.130:8000/');
+            const response = await axios.get('http://localhost:8000/');
             const articles = response.data;
 
             const articleCount = Math.min(3, articles.length); // limit to maximum of 3 articles
@@ -411,7 +411,7 @@ client.on('message', async (message) => {
         }
     } else if (lowerCase === 'more') {
         try {
-            const response = await axios.get('http://20.203.148.130:8000/');
+            const response = await axios.get('http://localhost:8000/');
             const articles = response.data;
 
             const articleCount = Math.min(3, articles.length - 3); // get next 3 articles
