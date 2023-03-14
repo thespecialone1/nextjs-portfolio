@@ -6,12 +6,10 @@ const projectsData = [
     href: 'https://www.upwork.com/freelancers/~019954549d1897758d?p=1605209065760575488',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'Balayara General Transport Company',
+    description: `Balayara.ae is a website for a reputable general transport company that specializes in the transportation of oil and waste/debris management. The company has a fleet of reliable and efficient trucks that are equipped to handle various types of cargo, including hazardous materials.`,
+    imgSrc: '/static/images/balayara.ae.png',
+    href: 'https://balayara.ae',
   },
 ]
 
